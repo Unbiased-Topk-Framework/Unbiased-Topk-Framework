@@ -1,1 +1,1 @@
-# UTF: Unbiased Estimation of Top-$K$ Frequent Items
+# UTF: Unbiased Estimation of Top-K Frequent Items
