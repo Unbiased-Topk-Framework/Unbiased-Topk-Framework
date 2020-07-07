@@ -99,66 +99,11 @@ public:
 		return 0;
 	}
 
-	int query_thres(int in, int& hit, int opt, int opt2, int threshold=0){
-		assert (opt >= 0 && opt <= 2);
-		
-		char temp1[4];
-		memcpy((void*)temp1, &in, 4);
-		unsigned int id_num = in;
-		unsigned int h_id = hash_cnt[0].run(temp1, 4) % bucketNum; 
-
-		for (int i = 0; i < bucket_length; i++){
-			if ((item[h_id][i].id == id_num) && (item[h_id][i].cnt >= threshold)){
-				hit = 1;
-				if (opt == 0){
-					return item[h_id][i].underest;
-				}
-				else if (opt == 1){
-					if (opt2 == 0){
-						return item[h_id][i].underest + item[h_id][i].store_unbiased;
-					}
-					else{
-						return item[h_id][i].underest + light_part->query(temp1, 1);
-					}
-				}
-				else if (opt == 2){
-					if (opt2 == 0){
-						return item[h_id][i].underest + item[h_id][i].store_overest;
-					}
-					else{
-						return item[h_id][i].underest + light_part->query(temp1, 0);
-					}
-				}
-			}
-		}
-		hit = 0;
-		return 0;
-	}
-
 	int query_cs(int in){
 		char temp1[4] = {};
 		memcpy((void*)temp1, &in, 4);
 
 		return light_part2->query(temp1, 1);
-	}
-
-	double query_precision(flow_item* flows, int topk){
-		int threshold = flows[topk - 1].cnt;
-		int all = 0;
-		for (int i = 0; i < bucketNum; i++){
-			for (int j = 0; j < bucket_length; j++){
-				if (item[i][j].cnt >= threshold){
-					all++;
-				}
-			}
-		}
-
-		int hit = 0, tmp_hit;
-		for (int i = 0; i < topk; i++){
-			query_thres(flows[i].hash_value, tmp_hit, 0, 0, threshold);
-			hit += tmp_hit;
-		}
-		return (double)hit / (double)all;
 	}
 };
 
