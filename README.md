@@ -86,5 +86,7 @@ After that, you should modify `src/run.sh`, and then run `src/run.sh`. All the p
 
 ## References
 [1] The caida anonymized 2016 internet traces. http://www.caida.org/data/overview/.
+
 [2] Real-life transactional dataset. http://fimi.ua.ac.be/data/.
+
 [3] The Network dataset Internet Traces. http://snap.stanford.edu/data/.
